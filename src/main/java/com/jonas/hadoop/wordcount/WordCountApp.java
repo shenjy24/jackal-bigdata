@@ -1,5 +1,6 @@
 package com.jonas.hadoop.wordcount;
 
+import com.jonas.util.WordCountDataUtil;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -44,6 +45,12 @@ public class WordCountApp {
         // 设置 Reducer 输出 key 和 value 的类型
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
+        // 设置 Combiner
+        job.setCombinerClass(WordCountReducer.class);
+        // 设置自定义分区规则
+        job.setPartitionerClass(WordCountPartitioner.class);
+        // 设置 reduce 个数
+        job.setNumReduceTasks(WordCountDataUtil.WORDS.size());
 
         // 如果输出目录已经存在，则必须先删除，否则重复运行程序时会抛出异常
         FileSystem fileSystem = FileSystem.get(new URI(HDFS_URL), configuration, HADOOP_USER_NAME);
