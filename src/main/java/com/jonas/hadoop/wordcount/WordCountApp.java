@@ -11,20 +11,22 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.net.URI;
+import java.net.URL;
 
 /**
  * 组装 MapReduce 作业，并提交到服务器运行
  */
 public class WordCountApp {
 
-    private static final String HDFS_URL = "hdfs://127.0.0.1:8020";
+    private static final String HDFS_URL = "hdfs://192.168.157.128:8020";
     private static final String HADOOP_USER_NAME = "root";
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
+        URL inUrl = WordCountApp.class.getClassLoader().getResource("input.txt");
+        new WordCountApp().doCountWorkJob(inUrl, "/word/output");
     }
 
-    private void doCountWorkJob(String inPath, String outPath) throws Exception {
+    private void doCountWorkJob(URL inPath, String outPath) throws Exception {
         // 需要指明 hadoop 用户名，否则在 HDFS 上创建目录时可能会抛出权限不足的异常
         System.setProperty("HADOOP_USER_NAME", HADOOP_USER_NAME);
 
@@ -60,7 +62,7 @@ public class WordCountApp {
         }
 
         // 设置作业输入文件和输出文件的路径
-        FileInputFormat.setInputPaths(job, new Path(inPath));
+        FileInputFormat.setInputPaths(job, new Path(inPath.toURI()));
         FileOutputFormat.setOutputPath(job, outputPath);
 
         // 将作业提交到群集并等待它完成，参数设置为true代表打印显示对应的进度
