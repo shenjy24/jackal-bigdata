@@ -18,7 +18,7 @@ import java.net.URL;
  */
 public class WordCountApp {
 
-    private static final String HDFS_URL = "hdfs://hadoop001:8020";
+    private static final String HDFS_URL = "hdfs://192.168.157.128:8020";
     private static final String HADOOP_USER_NAME = "jonas";     //启动HDFS服务的Linux用户即为HDFS的超级用户
 
     public static void main(String[] args) throws Exception {
