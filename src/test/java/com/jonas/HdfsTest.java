@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-public class AppTest {
+public class HdfsTest {
 
     @Test
     public void testMkdir() {
