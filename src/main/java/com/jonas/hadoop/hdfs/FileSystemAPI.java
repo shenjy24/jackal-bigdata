@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class FileSystemAPI {
 
-    private static final String HDFS_URL = "hdfs://192.168.157.128:8020";
+    private static final String HDFS_URL = "hdfs://173.82.140.18:8020";
     private static final String HDFS_USER = "jonas";
     private static FileSystem fileSystem;
 
