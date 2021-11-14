@@ -12,6 +12,8 @@ import java.util.List;
 
 public class HBaseAPI {
 
+    //Connection 是线程安全的，但 Table 和 Admin 却不是线程安全的
+    //Table 和 Admin 的获取操作 getTable() 和 getAdmin() 都是轻量级，所以不必担心性能的消耗，同时建议在使用完成后显示的调用 close() 方法来关闭它们。
     private static Connection connection;
 
     static {
